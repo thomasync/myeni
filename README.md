@@ -1,5 +1,3 @@
-
-
 # MyENI
 
 Download your books stored on your eni account, in EPUB or PDF.
