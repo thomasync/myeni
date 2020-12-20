@@ -1,0 +1,25 @@
+{
+  "name": "myeni",
+  "version": "1.0.0",
+  "description": "Download books from Eni Editions Account",
+  "main": "myeni.js",
+  "dependencies": {
+    "epub-gen": "^0.1.0",
+    "fs-extra": "^9.0.1",
+    "node-html-parser": "^2.0.0",
+    "pdf-merger-js": "^3.0.5",
+    "puppeteer": "^5.5.0",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "eni",
+    "books",
+    "download"
+  ],
+  "author": "Thomas Cauquil",
+  "license": "ISC"
+}
