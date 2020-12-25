@@ -1,7 +1,4 @@
 tmp
-
-result/*
-!result/.gitkeep 
-
+result
 node_modules
 package-lock.json

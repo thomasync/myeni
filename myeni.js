@@ -8,38 +8,30 @@ const request = require('request');
 const readline = require("readline");
 
 
-const cookies = [{
-    'name': 'ENI_Editions_Portail',
-    'value': ''
-},{
-    'name': '__hnwky',
-    'value': ''
-},{
-    'name': '__rsaxc',
-    'value': ''
-}];
+const cookies = [];
 
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
 
-rl.question("Cookie (ENI_Editions_Portail): ", (arg_eni) => {
-    rl.question("Cookie (__hnwky): ", (arg_hn) => {
-        rl.question("Cookie (__rsaxc): ", (arg_rs) => {
-            rl.question("Id du livre: ", (arg_id) => {
-                rl.question("Télécharger en quel format ? [epub/pdf]: ", (arg_type) => {
-                    cookies[0].value = arg_eni;
-                    cookies[1].value = arg_hn;
-                    cookies[2].value = arg_rs;
-                    try {
-                        downloadBook(arg_id, arg_type);
-                    }
-                    catch(ex) {
-                        console.log('Une erreur est survenue.');
-                    }
-                });
-            });
+rl.question("Cookies: ", (arg_cookies) => {
+    arg_cookies = arg_cookies.replace(/"/g, "").replace(/\s/g, "").split(";")
+    arg_cookies.forEach((arg_cookie) => {
+        arg_cookie = arg_cookie.match(/(.*?)=(.*)/);
+        cookies.push({
+            name: arg_cookie[1].trim(),
+            value: arg_cookie[2].trim()
+        });
+    });
+    rl.question("Id du livre: ", (arg_id) => {
+        rl.question("Télécharger en quel format ? [epub/pdf]: ", (arg_type) => {
+            try {
+                downloadBook(arg_id, arg_type);
+            }
+            catch(ex) {
+                console.log('Une erreur est survenue.');
+            }
         });
     });
 });
@@ -163,7 +155,12 @@ async function createEPUB(name, isbn) {
         });
         
     });
-    new epub(options).promise.then(() => console.log('Done'));
+    if (!fs.existsSync('result')){
+        fs.mkdirSync('result');
+    }
+    new epub(options).promise.then(() => {
+        return Promise.resolve();
+    });
 }
 
 async function dlPDF(page, id) {
@@ -183,6 +180,9 @@ async function mergePDF(name) {
     fs.readdirSync('tmp').forEach(file => {
         merger.add('tmp/' + file);
     });
+    if (!fs.existsSync('result')){
+        fs.mkdirSync('result');
+    }
     await merger.save('result/' + name + '.pdf');
 }
 
