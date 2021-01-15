@@ -112,7 +112,7 @@ const rl = readline.createInterface({
             await new Promise(function(resolve) {setTimeout(resolve, 1500)});
 
             const pageDL = await browser.newPage();
-            await pageDL.goto('http://www.eni-training.com/client_net/pdfexport.aspx?exporttype=1');
+            await pageDL.goto('https://www.eni-training.com/client_net/pdfexport.aspx?exporttype=1');
             
             if(type === "epub") {
                 await dlEPUB(pageDL, id);
